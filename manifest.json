@@ -18,22 +18,18 @@
       "matches": ["http://120.117.2.135/CourSel/Pages/CourseMap/CourseMap.aspx?helper=1"],
       "js": ["js/jquery-2.2.4.min.js", "js/firstscan.js"]
     },
-    // 01D112 外語能力檢定
     {
       "matches": ["http://portal.stust.edu.tw/StudentPortfolio/Pages/stud_lang_grad/stud_lang_grad.aspx?helper=1"],
       "js": ["js/jquery-2.2.4.min.js", "js/01D112.js"]
     },
-    // 01D12Q 資訊基本能力檢核
     {
       "matches": ["http://portal.stust.edu.tw/StudentPortfolio/Pages/InfoAbility/InfoAbility.aspx?helper=1"],
       "js": ["js/jquery-2.2.4.min.js", "js/01D12Q.js"]
     },
-    // 30D167 專業證照
     {
       "matches": ["http://portal.stust.edu.tw/StudentPortfolio/Pages/LicenseStudent/LicenseStudentPage.aspx?helper=1"],
       "js": ["js/jquery-2.2.4.min.js", "js/30D167.js"]
     },
-    // 30D1CD 校外實習
     {
       "matches": ["http://portal.stust.edu.tw/StudentPortfolio/Pages/Manager/Student_Intern_data.aspx?helper=1"],
       "js": ["js/jquery-2.2.4.min.js", "js/30D1CD.js"]
