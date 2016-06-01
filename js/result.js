@@ -16,28 +16,43 @@
 // $('.secondscan').text(JSON.stringify(data, undefined ,2))
 
 
-chrome.runtime.sendMessage({get: "firstscan"}, function(res) {
-  dumpdata('first',res.status)
-})
+// chrome.runtime.sendMessage({get: "firstscan"}, function(res) {
+//   dumpdata('first',res.status)
+// })
 
-chrome.runtime.sendMessage({get: "secondscan"}, function(res) {
-  dumpdata('second',res.status)
-})
+// chrome.runtime.sendMessage({get: "secondscan"}, function(res) {
+//   dumpdata('second',res.status)
+// })
 
-setInterval(function(){
+$(document).ready(function(){
   chrome.runtime.sendMessage({get: "secondscan"}, function(res) {
-    dumpdata('second',res.status)
+    var getdata = res.status
+    new Vue({
+      el: '.container',
+      data: {gPussy: getdata.專業學程門檻, gPenis: getdata.分類通識審查, gFuck: getdata.必修科目審查, gPorn: getdata.必修學分審查, gXxx: getdata.選修學分審查, gSex: getdata.總學分審查},
+      computed: {
+        gPornRec:function(){
+          var orzDone = this.gPorn.info.done;
+          var orzAll = this.gPorn.info.all;
+          orzAll = 100 / orzAll;
+          orzDone = orzDone * orzAll;
+          return orzDone;
+        },
+        gXxxRec:function(){
+          var orzDone = this.gXxx.info.done;
+          var orzAll = this.gXxx.info.all;
+          orzAll = 100 / orzAll;
+          orzDone = orzDone * orzAll;
+          return orzDone;
+        },
+        gSexRec:function(){
+          var orzDone = this.gSex.info.done;
+          var orzAll = this.gSex.info.all;
+          orzAll = 100 / orzAll;
+          orzDone = orzDone * orzAll;
+          return orzDone;
+        }
+      }
+    })
   })
-},500)
-
-function dumpdata (id, data){
-  $('table .a .'+id).html(data.專業學程門檻.info.done)
-  $('table .b .'+id).html('已通過<br />' + data.分類通識審查.info.done.join('<br>'))
-  if(data.分類通識審查.info.undone){
-    $('table .b .'+id).html('未通過<br />' + data.分類通識審查.info.undone.join('<br>') + '<br />' + $('table .b .'+id).html() )
-  }
-  $('table .c .'+id).html(data.必修科目審查.info.undone.join('<br>'))
-  $('table .d .'+id).html('(' + data.必修學分審查.info.done + '/' + data.必修學分審查.info.all + ')')
-  $('table .e .'+id).html('(' + data.選修學分審查.info.done + '/' + data.選修學分審查.info.all + ')' + '不承認:' + data.選修學分審查.info.deny)
-  $('table .f .'+id).html('(' + data.總學分審查.info.done + '/' + data.總學分審查.info.all + ')')
-}
+})

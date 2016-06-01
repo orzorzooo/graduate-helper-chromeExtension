@@ -2,59 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>畢業預警助手結果</title>
-  <script src="js/jquery-2.2.4.min.js"></script>
-  <style type="text/css">
-    table{
-          border-collapse: collapse;
-    }
-    table tr td{
-      border: 1px solid black;
-      padding: 10px;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+  <script type="text/javascript" src="js/vue.min.js"></script>
+  <script type="text/javascript" src="js/result.js"></script>
 </head>
 <body>
-  <h1>畢業預警助手結果</h1>
+  <div class="container">
+    <div class="row g-row">
+    <h1>畢業助手</h1>
+      <!-- 專業學程門檻 -->
+      <div class="g-col" v-bind:class="{'pass':gPussy.passing}" id="g-pussy">
+        <h2 v-if="gPussy.passing"> {{gPussy.rule}} 通過 <span class="glyphicon glyphicon-ok"></span></h2>
+        <h2 v-else> {{gPussy.rule}} 不通過 <span class="glyphicon glyphicon-remove"></span></h2>
+        <h3>已完成:</h3>
+        <li class="finish" v-bind:class="{'white':gPussy.passing}" v-for="data in gPussy.info.done"> {{data}}</li>
+      </div>
 
-  <table>
-    <tr class='title'>
-      <td></td>
-      <td>畢業預警</td>
-      <td>畢業助手</td>
-    </tr>
-    <tr class='a'>
-      <td>專業學程門檻</td>
-      <td class='first'></td>
-      <td class='second'></td>
-    </tr>
-    <tr class='b'>
-      <td>分類通識審查</td>
-      <td class='first'></td>
-      <td class='second'></td>
-    </tr>
-    <tr class='c'>
-      <td>必修科目審查</td>
-      <td class='first'></td>
-      <td class='second'></td>
-    </tr>
-    <tr class='d'>
-      <td>必修學分審查</td>
-      <td class='first'></td>
-      <td class='second'></td>
-    </tr>
-    <tr class='e'>
-      <td>選修學分審查</td>
-      <td class='first'></td>
-      <td class='second'></td>
-    </tr>
-    <tr class='f'>
-      <td>總學分審查</td>
-      <td class='first'></td>
-      <td class='second'></td>
-    </tr>
-  </table>
+     <!-- 分類通識審查 -->
+      <div class="g-col" v-bind:class="{'pass':gPenis.passing}" id="g-penis">
+        <h2 v-if="gPenis.passing"> {{gPenis.rule}} 通過 <span class="glyphicon glyphicon-ok"></span></h2>
+        <h2 v-else> {{gPenis.rule}} 不通過 <span class="glyphicon glyphicon-remove"></span></h2>
+        <h3>已完成:</h3>
+        <li  class="finish" v-bind:class="{'white':gPenis.passing}"  v-for="data in gPenis.info.done"> {{data.name}}</li>
+        <h3>未完成:</h3>
+        <li v-for="data in gPenis.info.undone"> {{data.name}}</li>
+      </div>
+
+      <!-- 必修科目審查 -->
+      <div class="g-col" v-bind:class="{'pass':gFuck.passing}" id="g-fuck">
+        <h2 v-if="gFuck.passing"> {{gFuck.rule}} 通過 <span class="glyphicon glyphicon-ok"></span></h2>
+        <h2 v-else> {{gFuck.rule}} 不通過 <span class="glyphicon glyphicon-remove"></span></h2>
+        <h3>已完成:</h3>
+        <li class="finish" v-bind:class="{'white':gFuck.passing}" v-for="data in gFuck.info.done"> {{data.name}}</li>
+        <h3>未完成:</h3>
+        <li v-for="data in gFuck.info.undone"> {{data.name}}</li>
+      </div>
+
+      <!-- 必修學分審查 -->
+      <div class="g-col" v-bind:class="{'pass':gPorn.passing}" id="g-porn">
+        <h2 v-if="gPorn.passing"> {{gPorn.rule}} 通過 <span class="glyphicon glyphicon-ok"></span></h2>
+        <h2 v-else> {{gPorn.rule}} 不通過 <span class="glyphicon glyphicon-remove"></span></h2>
+        <h3> {{gPorn.info.done}} / {{gPorn.info.all}}</h3>
+        <div class="rec-outside">
+          <div class="rec" v-bind:style="{width: gPornRec + '%'}"></div>
+        </div>
+      </div>
+
+      <!-- 選修學分審查 -->
+      <div class="g-col" v-bind:class="{'pass':gXxx.passing}" id="g-xxx">
+        <h2 v-if="gXxx.passing"> {{gXxx.rule}} 通過 <span class="glyphicon glyphicon-ok"></span></h2>
+        <h2 v-else> {{gXxx.rule}} 不通過 <span class="glyphicon glyphicon-remove"></span></h2>
+        <h3> {{gXxx.info.done}} / {{gXxx.info.all}}</h3>
+         <div class="rec-outside">
+          <div class="rec" v-bind:style="{width: gXxxRec + '%'}"></div>
+        </div>
+        <h3> 不承認: {{gXxx.info.deny}} </h3>
+      </div>
+
+      <!-- 總學分審查 -->
+      <div class="g-col" v-bind:class="{'pass':gSex.passing}" id="g-sex">
+        <h2 v-if="gSex.passing"> {{gSex.rule}} 通過 <span class="glyphicon glyphicon-ok"></span></h2>
+        <h2 v-else> {{gSex.rule}} 不通過 <span class="glyphicon glyphicon-remove"></span></h2>
+        <h3> {{gSex.info.done}} / {{gSex.info.all}}</h3>
+         <div class="rec-outside">
+          <div class="rec" v-bind:style="{width: gSexRec + '%'}"></div>
+        </div>
+      </div>
+    </div><!-- row -->
+  </div><!-- container -->
 </body>
-<script src="js/result.js"></script>
 </html>

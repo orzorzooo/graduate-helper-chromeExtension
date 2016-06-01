@@ -103,12 +103,18 @@ chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if(request.update){
       var p = []
+      if ( !secondscan['必修科目審查'].info.done){
+        secondscan['必修科目審查'].info.done = []
+      }
+      var p2 = secondscan['必修科目審查'].info.done
       var u = request.update
 
       if(u.status == 'ok'){
         $.each(secondscan['必修科目審查'].info.undone, function(index, value){
-          if(value.split(' ')[1] != u.name){
+          if(value.name.split(' ')[1] != u.name){
             p.push(value)
+          }else{
+            p2.push(value)
           }
         })
         secondscan['必修科目審查'].info.undone = p
@@ -125,28 +131,34 @@ function ScanFormatter (data){
       case "專業學程門檻" :
         var prog = value.info.split('：')
         if(prog[0] == '已完成系所承認學程'){
-          data[index].info = {done: prog[1]}
+          data[index].info = {done: { name: prog[1] } }
         }
         break
 
       case "分類通識審查" :
         var sub = value.info.split('已完成：')
         var undone = sub[0].split('：')[1]
+        // if(undone){
+        //   undone = undone.split(',')
+        // }
         if(undone){
           undone = undone.split(',')
+          $.each(undone, function(index, value){
+            undone[index] = { name: value }
+          })
         }
         var done = sub[1].split(',')
         $.each(done,function(index, value){
-          done[index]=value.replace(/^\s+|\s+$/g,'')
+          done[index]={ name: value.replace(/^\s+|\s+$/g,'') }
         })
-        data[index].info = {undone: undone, done: done}
+        data[index].info = { undone: undone, done: done }
         break
 
       case "必修科目審查" :
         var sub = value.info.split('：')
         if(sub[0] == '時序表未完成'){
           $.each(sub[1].split(','),function(index, value){
-            sub[index]=value.replace(/^\s+|\s+$/g,'')
+            sub[index]={ name: value.replace(/^\s+|\s+$/g,'') }
           })
           data[index].info = {undone: sub}
         }
@@ -162,7 +174,7 @@ function ScanFormatter (data){
         var e = value.info.split(',')
         var elective = e[0].split('：')[1].split('/')
         var deny = e[1].split('：')[1]
-        data[index].info = {done: elective[0], all: elective[1], deny: deny}
+        data[index].info = { done: elective[0], all: elective[1], deny: deny }
         break
 
     }
@@ -174,11 +186,12 @@ function undoneTesting(data){
   // chrome.tabs.update(sender.tab.id, {url: "result.html"})
   // Testing each 必修科目審查's item whether really undone
   query = $.extend( true, [], data['必修科目審查'].info.undone)
+  console.log(query)
   $.each(query, function(index, value){
-    query[index] = value.split(' ')[1]
+    query[index].name = value.name.split(' ')[1]
   })
   $.each(query, function(index, value){
-    switch(value) {
+    switch(value.name) {
       case '外語能力檢定': // 01D112 外語能力檢定
         chrome.tabs.create({url: 'http://portal.stust.edu.tw/StudentPortfolio/Pages/stud_lang_grad/stud_lang_grad.aspx?helper=1', active:false})
         break
