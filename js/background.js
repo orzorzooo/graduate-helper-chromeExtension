@@ -186,7 +186,6 @@ function undoneTesting(data){
   // chrome.tabs.update(sender.tab.id, {url: "result.html"})
   // Testing each 必修科目審查's item whether really undone
   query = $.extend( true, [], data['必修科目審查'].info.undone)
-  console.log(query)
   $.each(query, function(index, value){
     query[index].name = value.name.split(' ')[1]
   })
